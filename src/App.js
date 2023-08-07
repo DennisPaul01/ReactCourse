@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import Sidebar from "./components/Sidebar";
+import Main from "./components/Main";
+import Card from "./components/Card";
+
+import university from "./assets/university.png";
+import icon1 from "./assets/heroicons-solid_pencil-alt.png";
+import icon2 from "./assets/heroicons-solid_trash.png";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Sidebar />
+      <Main />
+      <Card>
+        <img src={university} alt="University" width="100" />
+        <p>University</p>
+        <p>MIT</p>
+        <div>
+          <button>
+            <img src={icon1} alt="icon1" width="50" />
+          </button>
+          <button>
+            <img src={icon2} alt="icon2" width="50" />
+          </button>
+        </div>
+      </Card>
     </div>
   );
 }
