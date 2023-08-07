@@ -4,7 +4,7 @@
 
 ### Task №1
 
-Break [layout](<https://www.figma.com/file/mfsNEI7Nv5i5fkdseWbFn7/Lesson-(Copy)?node-id=8701%3A11194>) into components
+Break [layout](<https://www.figma.com/file/pxX63yDNTayQwyiyen7uUP/Lesson-(English)?type=design&node-id=12307%3A1036&mode=design&t=qsyzOK3bJddngBI3-1>) into components
 
 **Example**
 
