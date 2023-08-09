@@ -4,9 +4,14 @@ import { menuConfig } from "../data/menu";
 
 function Menu() {
   return (
-    <div>
+    <div className="tabs">
       {menuConfig.map((tab, index) => {
-        return <MenuItem key={index} name={tab.name} />;
+        return (
+          <div className="tabs__tab">
+            {tab.icon}
+            <MenuItem key={index} name={tab.name} />
+          </div>
+        );
       })}
     </div>
   );

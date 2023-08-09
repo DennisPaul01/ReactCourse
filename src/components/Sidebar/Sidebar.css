@@ -1,0 +1,31 @@
+.sidebar {
+  width: 100%;
+  max-width: 300px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.sidebar__block {
+  height: 80px;
+  background-color: #161d2a;
+}
+
+.tabs {
+  margin-bottom: auto;
+}
+.tabs__tab,
+.username {
+  display: flex;
+  font-size: 24px;
+  align-items: center;
+  padding: 10px;
+}
+
+.tabs__tab svg,
+.username__icon {
+  color: #ff6b0a;
+  padding-right: 10px;
+}

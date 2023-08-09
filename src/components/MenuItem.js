@@ -1,7 +1,7 @@
 import React from "react";
 
 function MenuItem({ name }) {
-  return <div>{name}</div>;
+  return <p className="tabs__tab-text">{name}</p>;
 }
 
 export default MenuItem;
