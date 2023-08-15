@@ -1,13 +1,22 @@
-import React from "react";
-import Paper from "../../components/Paper";
+import React, { useState } from "react";
+import Paper from "../../components/Paper/Paper";
 import Tutor from "../../components/Tutor/Tutor";
 import Button from "../../components/Button/Button";
 
 import { AiFillPlusCircle } from "react-icons/ai";
 
+import style from "./Tutors.module.css";
+import TutorForm from "../../components/TutorForm/TutorForm";
+
 export default function Tutors({ tutors }) {
+  const [showForm, setShowForm] = useState(false);
+
+  const onShowForm = () => {
+    setShowForm(!showForm);
+  };
+
   return (
-    <div>
+    <div className={style.tutors}>
       <h1>Tutors</h1>
       {tutors.map((tutor, index) => {
         return (
@@ -24,7 +33,17 @@ export default function Tutors({ tutors }) {
         );
       })}
 
-      <Button icon={<AiFillPlusCircle />} text={"ADD TUTOR"} onClick={null} />
+      {showForm && (
+        <Paper>
+          <TutorForm />
+        </Paper>
+      )}
+
+      <Button
+        icon={<AiFillPlusCircle />}
+        text={"ADD TUTOR"}
+        declansator={onShowForm}
+      />
     </div>
   );
 }

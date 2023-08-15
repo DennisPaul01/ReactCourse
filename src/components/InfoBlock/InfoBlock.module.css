@@ -1,0 +1,34 @@
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info button {
+  cursor: pointer;
+  border: none;
+  background-color: white;
+  font-size: 20px;
+  display: flex;
+  padding: 5px;
+  border-radius: 100%;
+}
+
+.info button:hover {
+  background-color: #eceff1;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  gap: 0;
+}
+.modal div {
+  display: flex;
+  align-items: center;
+}
+
+.modal svg {
+  font-size: 20px;
+}

@@ -1,0 +1,7 @@
+.tutor {
+  display: flex;
+  gap: 50px;
+}
+.tutor div {
+  min-width: 300px;
+}

@@ -7,9 +7,9 @@ function Menu() {
     <div className="tabs">
       {menuConfig.map((tab, index) => {
         return (
-          <div className="tabs__tab">
+          <div key={index} className="tabs__tab">
             {tab.icon}
-            <MenuItem key={index} name={tab.name} />
+            <MenuItem name={tab.name} />
           </div>
         );
       })}

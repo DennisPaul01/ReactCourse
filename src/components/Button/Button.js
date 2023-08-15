@@ -1,8 +1,10 @@
 import React from "react";
 
-export default function Button({ text, icon, onClick }) {
+import style from "./Button.module.css";
+
+export default function Button({ text, icon, declansator }) {
   return (
-    <button onClick={onClick}>
+    <button className={style.button} onClick={declansator}>
       {icon}
       {text}
     </button>

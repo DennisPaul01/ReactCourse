@@ -35,5 +35,10 @@ img {
 .layout {
   display: flex;
   justify-content: space-between;
-  height: 100vh;
+  min-height: 100vh;
+}
+.univ {
+  display: flex;
+  gap: 30px;
+  margin: 20px;
 }

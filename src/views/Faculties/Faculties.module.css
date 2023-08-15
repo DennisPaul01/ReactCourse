@@ -1,0 +1,11 @@
+.faculties {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px;
+}
+.faculties div {
+  display: flex;
+  min-width: 200px;
+  gap: 30px;
+}

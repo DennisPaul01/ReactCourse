@@ -2,6 +2,8 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
+import style from "./Tutor.module.css";
+
 export default function Tutor({
   city,
   email,
@@ -11,12 +13,16 @@ export default function Tutor({
   phone,
 }) {
   return (
-    <div>
-      <p>{firstName}</p>
-      <p>{lastName}</p>
-      <p>{phone}</p>
-      <p>{email}</p>
-      <p>{city}</p>
+    <div className={style.tutor}>
+      <div>
+        <p>{firstName}</p>
+        <p>{lastName}</p>
+      </div>
+      <div>
+        <p>{phone}</p>
+        <p>{email}</p>
+        <p>{city}</p>
+      </div>
       <p>{options}</p>
     </div>
   );

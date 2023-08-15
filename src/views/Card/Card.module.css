@@ -1,0 +1,15 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.card p {
+  font-size: 18px;
+  margin: auto;
+}
+.card div {
+  display: flex;
+  font-size: 24px;
+  margin: auto;
+  gap: 10px;
+}

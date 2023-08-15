@@ -1,0 +1,25 @@
+.button {
+  background-color: #ff6b0a;
+  border: 0;
+  display: flex;
+  padding: 10px 20px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  min-width: 200px;
+  max-width: 250px;
+  justify-content: center;
+}
+
+.button svg {
+  padding-right: 10px;
+  font-size: 24px;
+}
+
+.button:hover {
+  background-color: #ffb482;
+}
+
+.button:active {
+  background-color: #ff6b0a;
+}

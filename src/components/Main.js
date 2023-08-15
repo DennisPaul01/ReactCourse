@@ -10,8 +10,10 @@ import Description from "../views/Description/Description";
 export default function Main() {
   return (
     <div>
-      <Card />
-      <Description />
+      <div className="univ">
+        <Card />
+        <Description />
+      </div>
       <Tutors tutors={collectionData.tutors} />
       <Cities cities={collectionData.cities} />
       <Faculties faculties={collectionData.department} />

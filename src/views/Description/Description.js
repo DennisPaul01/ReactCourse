@@ -1,10 +1,10 @@
 import React from "react";
-import Paper from "../../components/Paper";
+import Paper from "../../components/Paper/Paper";
 
 export default function Description() {
   return (
     <Paper>
-      <p>
+      <p style={{ fontSize: "22px" }}>
         Experience, a concentration of knowledge and the ability to avoid most
         recruiting mistakes. We know what most local and foreign companies want
         and we can give it to you. And we are constantly improving our
