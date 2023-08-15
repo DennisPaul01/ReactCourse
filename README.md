@@ -1,39 +1,39 @@
-# Lesson №2
+# Lesson №3
 
-## Components styling (Continuing with the code from the first lesson)
+## Events and state
 
 ### Task №1
 
-Style the sidebar using standard CSS
+Add a button handler
+
+- Add tutor
+- Add city
+- Add faculty
+
+When clicking on "Add tutor" show or hide the form for adding a tutor
+
+![tutorForm](/images/tutorForm.png)
+
+When clicking on "Add city" show or hide the form for adding a city
+
+![cityForm](/images/cityForm.png)
+
+When clicking on "Add faculty" show or hide the form for adding a faculty
+
+![cityForm](/images/departmentForm.png)
+
+Use state in classes
 
 ### Task №2
 
-Style the card and description using css module
+Hang a handler on ... and show a list of operations "Delete" "Edit"
 
-![section](/images/section.png)
+![dropdown](/images/dropdown.png)
+
+Use state in classes
 
 ### Task №3
 
-Style the rest of the layout using `emotion`
+Make removal of faculty and city when clicking on "Delete"
 
-![emotion](/images/emotion.png)
-
-### Task №4
-
-Add icons to the menu
-
-```jsx
-import { HiBookOpen, HiAcademicCap } from "react-icons/hi";
-
-export const menuConfig = [
-  {
-    name: "Universities",
-    icon: <HiBookOpen />,
-  },
-
-  {
-    name: "Faculties",
-    icon: <HiAcademicCap />,
-  },
-];
-```
+![dropdown](/images/dropdown.png)
