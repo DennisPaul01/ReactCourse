@@ -6,13 +6,19 @@ import Button from "../../components/Button/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 import style from "./Tutors.module.css";
-import TutorForm from "../../components/TutorForm/TutorForm";
+import TutorForm from "../../components/Forms/TutorForm/TutorForm";
 
-export default function Tutors({ tutors }) {
+export default function Tutors({ data }) {
+  const [tutors, setTutors] = useState(data);
   const [showForm, setShowForm] = useState(false);
 
   const onShowForm = () => {
     setShowForm(!showForm);
+  };
+
+  const onAddTutor = (tutor) => {
+    setTutors((prev) => [...prev, tutor]);
+    setShowForm(false);
   };
 
   return (
@@ -35,14 +41,14 @@ export default function Tutors({ tutors }) {
 
       {showForm && (
         <Paper>
-          <TutorForm />
+          <TutorForm onAddTutor={onAddTutor} />
         </Paper>
       )}
 
       <Button
         icon={<AiFillPlusCircle />}
         text={"ADD TUTOR"}
-        declansator={onShowForm}
+        onClick={onShowForm}
       />
     </div>
   );
