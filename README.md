@@ -1,39 +1,26 @@
-# Lesson №2
+# Lesson №4
 
-## Components styling (Continuing with the code from the first lesson)
+## Forms
 
 ### Task №1
 
-Style the sidebar using standard CSS
+Create a form for adding a tutor and when clicking on "Invite", hide the form and add the tutor to the collection
 
-### Task №2
+![tutorForm](/images/tutorForm.png)
 
-Style the card and description using css module
+### Task №2 
+Create a form for adding a city and a branch, and when clicking on the "Create" button, hide the form and add the faculty/city to the collection
 
-![section](/images/section.png)
+![cityForm](/images/cityForm.png)
 
 ### Task №3
 
-Style the rest of the layout using `emotion`
+Create a modal for editing the city / faculty that appears when you click on "Edit"
 
-![emotion](/images/emotion.png)
+![edit](/images/edit.png)
 
 ### Task №4
 
-Add icons to the menu
+Create a modal for deleting a city / faculty that appears when you click on "Delete"
 
-```jsx
-import { HiBookOpen, HiAcademicCap } from "react-icons/hi";
-
-export const menuConfig = [
-  {
-    name: "Universities",
-    icon: <HiBookOpen />,
-  },
-
-  {
-    name: "Faculties",
-    icon: <HiAcademicCap />,
-  },
-];
-```
+![delete](/images/delete.png)
