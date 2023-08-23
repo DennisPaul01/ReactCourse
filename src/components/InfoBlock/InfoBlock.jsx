@@ -34,7 +34,6 @@ export default function InfoBlock({ type, info, onDelete, onEdit }) {
 
   const handleModal = () => {
     setModal(!modal);
-    console.log("Salut");
   };
 
   const handlerDelete = () => {

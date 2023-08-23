@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import style from "./CitiesForm.module.css";
+import style from "./FacultiesForm.module.css";
 
-export default function CitiesForm({ onAddCity }) {
-  const [city, setCity] = useState("");
+export default function FacultiesForm({ onAddFaculty }) {
+  const [faculty, setFaculty] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    onAddCity(city);
+    onAddFaculty(faculty);
   };
 
   return (
     <div className={style.container}>
-      <h3>Add a city!</h3>
+      <h3>Add a faculty!</h3>
       <form className={style.form} onSubmit={handleSubmit}>
         <label>
           <input
             type="text"
-            name="city"
-            placeholder="City*"
+            name="faculty"
+            placeholder="Faculty*"
             required
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
+            value={faculty}
+            onChange={(event) => setFaculty(event.target.value)}
           />
         </label>
         <button type="submit">Add</button>

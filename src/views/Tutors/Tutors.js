@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "../../components/Paper/Paper";
 import Tutor from "../../components/Tutor/Tutor";
 import Button from "../../components/Button/Button";
@@ -21,10 +21,19 @@ export default function Tutors({ data }) {
     setShowForm(false);
   };
 
+  useEffect(() => {
+    const localStorageTutors = JSON.parse(localStorage.getItem("tutors"));
+    setTutors(localStorageTutors);
+  }, []);
+
+  useEffect(() => {
+    if (tutors) localStorage.setItem("tutors", JSON.stringify(tutors));
+  }, [tutors]);
+
   return (
     <div className={style.tutors}>
       <h1>Tutors</h1>
-      {tutors.map((tutor, index) => {
+      {tutors?.map((tutor, index) => {
         return (
           <Paper key={index}>
             <Tutor

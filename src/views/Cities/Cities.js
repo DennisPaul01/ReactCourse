@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "../../components/Paper/Paper";
 
 import Button from "../../components/Button/Button";
@@ -14,7 +14,6 @@ export default function Cities({ data }) {
   const [showForm, setShowForm] = useState(false);
 
   const onShowForm = () => {
-    console.log("test");
     setShowForm(!showForm);
   };
 
@@ -31,11 +30,20 @@ export default function Cities({ data }) {
     setCities((prev) => prev.map((item) => (item === city ? newCity : item)));
   };
 
+  useEffect(() => {
+    const localStorageCities = JSON.parse(localStorage.getItem("cities"));
+    setCities(localStorageCities);
+  }, []);
+
+  useEffect(() => {
+    if (cities) localStorage.setItem("cities", JSON.stringify(cities));
+  }, [cities]);
+
   return (
     <div className={style.cities}>
       <h1>Cities</h1>
       <div>
-        {cities.map((city, index) => {
+        {cities?.map((city, index) => {
           return (
             <Paper key={index}>
               <InfoBlock

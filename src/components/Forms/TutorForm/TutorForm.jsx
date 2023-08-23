@@ -17,7 +17,6 @@ export default function TutorForm({ onAddTutor }) {
   const handlerSubmit = (event) => {
     event.preventDefault();
     const formData = { firstName, lastName, phone, email, city, options };
-    console.log(formData);
     onAddTutor(formData);
   };
 
