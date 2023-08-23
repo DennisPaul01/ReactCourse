@@ -9,52 +9,94 @@ import InfoBlock from "../../components/InfoBlock/InfoBlock";
 import style from "./Cities.module.css";
 import CitiesForm from "../../components/Forms/CitiesForm/CitiesForm";
 
-export default function Cities({ data }) {
-  const [cities, setCities] = useState(data);
+import { citiesApi } from "../../api/api";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+
+export default function Cities() {
+  const [cities, setCities] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const onShowForm = () => {
     setShowForm(!showForm);
   };
 
-  const onAddCity = (city) => {
-    setCities((prev) => [...prev, city]);
+  const onAddCity = async (city) => {
+    try {
+      const response = await citiesApi.create({ name: city });
+      setCities((prev) => [...prev, response.data]);
+      setShowForm(false);
+    } catch (error) {
+      setError("Eroare la adaugarea unui oras nou");
+    }
+
     setShowForm(false);
   };
 
-  const onDeleteCity = (city) => {
-    setCities((prev) => prev.filter((item) => item !== city));
+  const onDeleteCity = async (id) => {
+    try {
+      await citiesApi.delete(id);
+      setCities((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      setError("Erroare la stergerea unui city.");
+    }
   };
 
-  const onEditCity = (city, newCity) => {
-    setCities((prev) => prev.map((item) => (item === city ? newCity : item)));
+  const onEditCity = async (id, newCity) => {
+    try {
+      const response = await citiesApi.update(id, { name: newCity });
+      setCities((prev) =>
+        prev.map((item) => (item.id === id ? response.data : item))
+      );
+    } catch (error) {
+      setError("Eroare la edit city");
+    }
   };
 
   useEffect(() => {
-    const localStorageCities = JSON.parse(localStorage.getItem("cities"));
-    setCities(localStorageCities);
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await citiesApi.getAll();
+        setCities(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        setError("Este o problema la /cities");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
-
-  useEffect(() => {
-    if (cities) localStorage.setItem("cities", JSON.stringify(cities));
-  }, [cities]);
 
   return (
     <div className={style.cities}>
       <h1>Cities</h1>
       <div>
-        {cities?.map((city, index) => {
-          return (
-            <Paper key={index}>
-              <InfoBlock
-                type={"CITY"}
-                info={city}
-                onDelete={onDeleteCity}
-                onEdit={onEditCity}
-              />
-            </Paper>
-          );
-        })}
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <>
+            {cities?.map((city, index) => {
+              return (
+                <Paper key={index}>
+                  <InfoBlock
+                    type={"CITY"}
+                    id={city.id}
+                    info={city.name}
+                    onDelete={onDeleteCity}
+                    onEdit={onEditCity}
+                  />
+                </Paper>
+              );
+            })}
+          </>
+        )}
       </div>
 
       {showForm && (
