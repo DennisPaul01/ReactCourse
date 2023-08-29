@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import Paper from "../../components/Paper/Paper";
 
 import Button from "../../components/Button/Button";
@@ -12,26 +12,26 @@ import CitiesForm from "../../components/Forms/CitiesForm/CitiesForm";
 import { citiesApi } from "../../api/api";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
+import { useToggle } from "../../hooks/useToggle";
+
 export default function Cities() {
   const [cities, setCities] = useState(null);
-  const [showForm, setShowForm] = useState(false);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const onShowForm = () => {
-    setShowForm(!showForm);
-  };
+  const { isOpen, open, close, toggle } = useToggle();
 
   const onAddCity = async (city) => {
     try {
       const response = await citiesApi.create({ name: city });
       setCities((prev) => [...prev, response.data]);
-      setShowForm(false);
+      close();
     } catch (error) {
       setError("Eroare la adaugarea unui oras nou");
     }
 
-    setShowForm(false);
+    close();
   };
 
   const onDeleteCity = async (id) => {
@@ -99,17 +99,13 @@ export default function Cities() {
         )}
       </div>
 
-      {showForm && (
+      {isOpen && (
         <Paper>
           <CitiesForm onAddCity={onAddCity} />
         </Paper>
       )}
 
-      <Button
-        icon={<AiFillPlusCircle />}
-        text={"ADD CITY"}
-        onClick={onShowForm}
-      />
+      <Button icon={<AiFillPlusCircle />} text={"ADD CITY"} onClick={toggle} />
     </div>
   );
 }

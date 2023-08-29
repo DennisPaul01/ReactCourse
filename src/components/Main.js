@@ -8,15 +8,15 @@ import Faculties from "../views/Faculties/Faculties";
 import Description from "../views/Description/Description";
 
 export default function Main() {
-  const handleAddMoreImages = () => {};
   return (
     <div>
       <div className="univ">
         <Card />
         <Description />
       </div>
-      <Tutors />
-      <Cities />
+      {/* <Tutors />
+      <Cities /> */}
+      <Faculties data={collectionData.department} />
     </div>
   );
 }

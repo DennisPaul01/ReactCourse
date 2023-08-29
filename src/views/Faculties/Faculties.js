@@ -10,44 +10,54 @@ import InfoBlock from "../../components/InfoBlock/InfoBlock";
 
 import FacultiesForm from "../../components/Forms/FacultiesForm/FacultiesForm";
 
-export default function Faculties({ data }) {
-  const [faculties, setFaculties] = useState();
-  const [showForm, setShowForm] = useState(false);
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-  const onShowForm = () => {
-    setShowForm(!showForm);
-  };
+import { useToggle } from "../../hooks/useToggle";
+
+export default function Faculties() {
+  const [faculties, setFaculties] = useState();
+
+  const { isOpen, open, close, toggle } = useToggle();
+
+  // * Creeaza / foloseste un custom hook
+  // ! Adauga functionalitate de add/ edit/ delete faculty
+  // ! Foloseste localStorage pentru a pastra data
 
   const onAddFaculty = (faculty) => {
-    setFaculties((prev) => [...prev, { name: faculty }]);
-    setShowForm(false);
+    const randomId = Math.floor(Math.random() * 1000 + 1);
+    setFaculties((prev) => [...prev, { id: randomId, name: faculty }]);
+    close();
   };
 
-  const onDeleteFaculty = (faculty) => {
-    setFaculties((prev) => prev.filter((item) => item.name !== faculty));
-  };
-
-  const onEditFaculty = (faculty, newFaculty) => {
-    console.log(faculty);
-    console.log(newFaculty);
-
+  const onEditFaculty = (id, newFaculty) => {
+    //  prev === faculties
     setFaculties((prev) =>
-      prev.map((item) => {
-        return item.name === faculty ? { name: newFaculty } : { name: faculty };
+      prev.map((faculty) => {
+        console.log(faculty);
+        return faculty.id === id
+          ? { id, name: newFaculty }
+          : { id: faculty.id, name: faculty.name };
       })
     );
   };
 
+  const onDeleteFaculty = (id) => {
+    setFaculties((prev) => prev.filter((faculty) => faculty.id !== id));
+  };
+
   useEffect(() => {
-    const localStorageCities = JSON.parse(localStorage.getItem("faculties"));
-    setFaculties(localStorageCities);
+    const localStorageData = JSON.parse(localStorage.getItem("faculties"));
+    if (localStorageData) setFaculties(localStorageData);
   }, []);
 
   useEffect(() => {
     if (faculties) localStorage.setItem("faculties", JSON.stringify(faculties));
   }, [faculties]);
 
-  console.log(faculties);
+  if (!faculties) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className={style.faculties}>
       <h1>Faculties</h1>
@@ -56,6 +66,7 @@ export default function Faculties({ data }) {
           return (
             <Paper key={index}>
               <InfoBlock
+                id={faculty.id}
                 type={"FACULTY"}
                 info={faculty.name}
                 onDelete={onDeleteFaculty}
@@ -66,7 +77,7 @@ export default function Faculties({ data }) {
         })}
       </div>
 
-      {showForm && (
+      {isOpen && (
         <Paper>
           <FacultiesForm onAddFaculty={onAddFaculty} />
         </Paper>
@@ -75,7 +86,7 @@ export default function Faculties({ data }) {
       <Button
         icon={<AiFillPlusCircle />}
         text={"ADD FACULTY"}
-        onClick={onShowForm}
+        onClick={toggle}
       />
     </div>
   );

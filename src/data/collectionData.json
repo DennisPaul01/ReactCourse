@@ -8,8 +8,8 @@
     { "id": 3, "name": "Timisoara" }
   ],
   "department": [
-    { "name": "Faculty of Computer Science" },
-    { "name": "Faculty of Automation" },
-    { "name": "Faculty of Neural Networks" }
+    { "id": 1, "name": "Faculty of Computer Science" },
+    { "id": 2, "name": "Faculty of Automation" },
+    { "id": 3, "name": "Faculty of Neural Networks" }
   ]
 }

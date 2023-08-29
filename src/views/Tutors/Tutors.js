@@ -12,21 +12,21 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { tutorApi } from "../../api/api";
 
+import { useToggle } from "../../hooks/useToggle";
+
 export default function Tutors() {
   const [tutors, setTutors] = useState();
-  const [showForm, setShowForm] = useState(false);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const onShowForm = () => {
-    setShowForm(!showForm);
-  };
+  const { isOpen, close, open, toggle } = useToggle();
 
   const onAddTutor = async (tutor) => {
     try {
       const response = await tutorApi.create(tutor);
       setTutors((prev) => [...prev, response.data]);
-      setShowForm(false);
+      close();
     } catch (error) {
       setError("A aparut o eroare la creearea unui tutore!");
     }
@@ -78,17 +78,13 @@ export default function Tutors() {
         </>
       )}
 
-      {showForm && (
+      {isOpen && (
         <Paper>
           <TutorForm onAddTutor={onAddTutor} />
         </Paper>
       )}
 
-      <Button
-        icon={<AiFillPlusCircle />}
-        text={"ADD TUTOR"}
-        onClick={onShowForm}
-      />
+      <Button icon={<AiFillPlusCircle />} text={"ADD TUTOR"} onClick={toggle} />
     </div>
   );
 }
