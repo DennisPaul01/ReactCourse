@@ -14,14 +14,13 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { useToggle } from "../../hooks/useToggle";
 
+import { useCities } from "../../store/CitiesContext";
+
 export default function Faculties() {
+  const { cities } = useCities();
   const [faculties, setFaculties] = useState();
 
-  const { isOpen, open, close, toggle } = useToggle();
-
-  // * Creeaza / foloseste un custom hook
-  // ! Adauga functionalitate de add/ edit/ delete faculty
-  // ! Foloseste localStorage pentru a pastra data
+  const { isOpen, close, toggle } = useToggle();
 
   const onAddFaculty = (faculty) => {
     const randomId = Math.floor(Math.random() * 1000 + 1);

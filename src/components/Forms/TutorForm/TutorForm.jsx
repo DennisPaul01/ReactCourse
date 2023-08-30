@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import style from "./TutorForm.module.css";
 
-export default function TutorForm({ onAddTutor }) {
+export default function TutorForm({ onAddTutor, closeModal }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -18,6 +18,7 @@ export default function TutorForm({ onAddTutor }) {
     event.preventDefault();
     const formData = { firstName, lastName, phone, email, city, options };
     onAddTutor(formData);
+    closeModal();
   };
 
   return (

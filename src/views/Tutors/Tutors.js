@@ -10,46 +10,14 @@ import TutorForm from "../../components/Forms/TutorForm/TutorForm";
 
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-import { tutorApi } from "../../api/api";
-
 import { useToggle } from "../../hooks/useToggle";
 
+import { useTutors } from "../../store/TutorsContext";
+
 export default function Tutors() {
-  const [tutors, setTutors] = useState();
+  const { tutors, isLoading, error, onAddTutor } = useTutors();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const { isOpen, close, open, toggle } = useToggle();
-
-  const onAddTutor = async (tutor) => {
-    try {
-      const response = await tutorApi.create(tutor);
-      setTutors((prev) => [...prev, response.data]);
-      close();
-    } catch (error) {
-      setError("A aparut o eroare la creearea unui tutore!");
-    }
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const response = await tutorApi.getAll();
-        setTutors(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setError("A aparut o erroare la cererea catre /tutors");
-        setIsLoading(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { isOpen, close, toggle } = useToggle();
 
   return (
     <div className={style.tutors}>
@@ -80,7 +48,7 @@ export default function Tutors() {
 
       {isOpen && (
         <Paper>
-          <TutorForm onAddTutor={onAddTutor} />
+          <TutorForm onAddTutor={onAddTutor} closeModal={close} />
         </Paper>
       )}
 

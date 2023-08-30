@@ -14,63 +14,13 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { useToggle } from "../../hooks/useToggle";
 
-export default function Cities() {
-  const [cities, setCities] = useState(null);
+import { useCities } from "../../store/CitiesContext";
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default function Cities() {
+  const { cities, isLoading, error, onAddCity, onDeleteCity, onEditCity } =
+    useCities();
 
   const { isOpen, open, close, toggle } = useToggle();
-
-  const onAddCity = async (city) => {
-    try {
-      const response = await citiesApi.create({ name: city });
-      setCities((prev) => [...prev, response.data]);
-      close();
-    } catch (error) {
-      setError("Eroare la adaugarea unui oras nou");
-    }
-
-    close();
-  };
-
-  const onDeleteCity = async (id) => {
-    try {
-      await citiesApi.delete(id);
-      setCities((prev) => prev.filter((item) => item.id !== id));
-    } catch (error) {
-      setError("Erroare la stergerea unui city.");
-    }
-  };
-
-  const onEditCity = async (id, newCity) => {
-    try {
-      const response = await citiesApi.update(id, { name: newCity });
-      setCities((prev) =>
-        prev.map((item) => (item.id === id ? response.data : item))
-      );
-    } catch (error) {
-      setError("Eroare la edit city");
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await citiesApi.getAll();
-        setCities(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setError("Este o problema la /cities");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div className={style.cities}>
@@ -101,7 +51,7 @@ export default function Cities() {
 
       {isOpen && (
         <Paper>
-          <CitiesForm onAddCity={onAddCity} />
+          <CitiesForm onAddCity={onAddCity} closeModal={close} />
         </Paper>
       )}
 
