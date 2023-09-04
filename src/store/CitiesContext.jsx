@@ -63,17 +63,14 @@ export function CitiesProvider({ children }) {
     fetchData();
   }, []);
 
-  const contextValue = useMemo(
-    () => ({
-      cities,
-      isLoading,
-      error,
-      onAddCity,
-      onDeleteCity,
-      onEditCity,
-    }),
-    []
-  );
+  const contextValue = {
+    cities,
+    isLoading,
+    error,
+    onAddCity,
+    onDeleteCity,
+    onEditCity,
+  };
   return (
     <CitiesContext.Provider value={contextValue}>
       {children}
