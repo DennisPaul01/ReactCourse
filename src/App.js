@@ -1,29 +1,42 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 
 import Sidebar from "./components/Sidebar/Sidebar";
-import Main from "./components/Main";
 
 import { Routes, Route } from "react-router-dom";
 
-import FacultiesPage from "./pages/FacultiesPage/FacultiesPage";
-import FacultyContent from "./views/FacultyContent/FacultyContent";
 import DescriptionRoute from "./views/DescriptionRoute";
 import HistoryRoute from "./views/HistoryRoute";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import LoadingPage from "./pages/LoadingPage/LoadingPage";
+
+const LazyFacultyPage = lazy(() =>
+  import("./pages/FacultiesPage/FacultiesPage")
+);
+
+const LazyMainPage = lazy(() => import("./components/Main"));
+
+const LazyFacultyContent = lazy(() =>
+  import("./views/FacultyContent/FacultyContent")
+);
 
 function App() {
   return (
     <div className="layout">
       <Sidebar />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/universities" element={<Main />} />
-        <Route path="/faculties" element={<FacultiesPage />}>
-          <Route path="description" element={<DescriptionRoute />} />
-          <Route path="history" element={<HistoryRoute />} />
-        </Route>
+      <Suspense fallback={<LoadingPage />}>
+        <Routes>
+          <Route path="/" element={<LazyMainPage />} />
+          <Route path="/universities" element={<LazyMainPage />} />
+          <Route path="/faculties" element={<LazyFacultyPage />} />
 
-        <Route path="/faculties/:facultyId" element={<FacultyContent />} />
-      </Routes>
+          <Route path="/faculties/:facultyId" element={<LazyFacultyContent />}>
+            <Route path="description" element={<DescriptionRoute />} />
+            <Route path="history" element={<HistoryRoute />} />
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }

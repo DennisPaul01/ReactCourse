@@ -32,7 +32,6 @@ export default function Faculties() {
     //  prev === faculties
     setFaculties((prev) =>
       prev.map((faculty) => {
-        console.log(faculty);
         return faculty.id === id
           ? { id, name: newFaculty }
           : { id: faculty.id, name: faculty.name };
