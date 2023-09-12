@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import Paper from "../../components/Paper/Paper";
 
 import Button from "../../components/Button/Button";
-
+import { useSelector } from "react-redux";
 import { AiFillPlusCircle } from "react-icons/ai";
 import InfoBlock from "../../components/InfoBlock/InfoBlock";
 
@@ -16,9 +16,13 @@ import { useToggle } from "../../hooks/useToggle";
 
 import { useCities } from "../../store/CitiesContext";
 
+import { addCity, deleteCity, editCity } from "../../redux/cities/actions";
+import { getCities } from "../../redux/cities/selectors";
+
 export default function Cities() {
-  const { cities, isLoading, error, onAddCity, onDeleteCity, onEditCity } =
-    useCities();
+  const cities = useSelector(getCities);
+
+  const { isLoading, error } = useCities();
 
   const { isOpen, open, close, toggle } = useToggle();
 
@@ -39,8 +43,8 @@ export default function Cities() {
                     type={"CITY"}
                     id={city.id}
                     info={city.name}
-                    onDelete={onDeleteCity}
-                    onEdit={onEditCity}
+                    onDelete={deleteCity}
+                    onEdit={editCity}
                   />
                 </Paper>
               );
@@ -51,7 +55,7 @@ export default function Cities() {
 
       {isOpen && (
         <Paper>
-          <CitiesForm onAddCity={onAddCity} closeModal={close} />
+          <CitiesForm onAddCity={addCity} closeModal={close} />
         </Paper>
       )}
 

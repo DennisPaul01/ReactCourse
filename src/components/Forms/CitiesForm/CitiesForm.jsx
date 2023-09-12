@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import style from "./CitiesForm.module.css";
+import { useDispatch } from "react-redux";
 
 export default function CitiesForm({ onAddCity, closeModal }) {
   const [city, setCity] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    onAddCity(city);
+    dispatch(onAddCity(city));
     closeModal();
   };
 
