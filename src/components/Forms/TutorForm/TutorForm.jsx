@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import style from "./TutorForm.module.css";
+import { useDispatch } from "react-redux";
 
 export default function TutorForm({ onAddTutor, closeModal }) {
   const [firstName, setFirstName] = useState("");
@@ -10,14 +11,16 @@ export default function TutorForm({ onAddTutor, closeModal }) {
   const [city, setCity] = useState("");
   const [options, setOptions] = useState("");
 
+  const dispatch = useDispatch();
+
   const handlerFirstName = (event) => {
     setFirstName(event.target.value);
   };
 
   const handlerSubmit = (event) => {
     event.preventDefault();
-    const formData = { firstName, lastName, phone, email, city, options };
-    onAddTutor(formData);
+    const tutor = { firstName, lastName, phone, email, city, options };
+    dispatch(onAddTutor(tutor));
     closeModal();
   };
 

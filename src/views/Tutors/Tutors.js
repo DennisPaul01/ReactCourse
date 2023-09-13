@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Paper from "../../components/Paper/Paper";
 import Tutor from "../../components/Tutor/Tutor";
 import Button from "../../components/Button/Button";
@@ -13,9 +13,13 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { useToggle } from "../../hooks/useToggle";
 
 import { useTutors } from "../../store/TutorsContext";
+import { useSelector } from "react-redux";
+import { getTutors } from "../../redux/selectors";
+import { addTutor } from "../../redux/tutorsSlice";
 
 export default function Tutors() {
-  const { tutors, isLoading, error, onAddTutor } = useTutors();
+  const tutors = useSelector(getTutors);
+  const { isLoading, error } = useTutors();
 
   const { isOpen, close, toggle } = useToggle();
 
@@ -48,7 +52,7 @@ export default function Tutors() {
 
       {isOpen && (
         <Paper>
-          <TutorForm onAddTutor={onAddTutor} closeModal={close} />
+          <TutorForm onAddTutor={addTutor} closeModal={close} />
         </Paper>
       )}
 

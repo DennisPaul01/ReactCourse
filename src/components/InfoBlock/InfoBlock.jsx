@@ -8,6 +8,7 @@ import deleteImg from "../../assets/delete.png";
 
 import style from "./InfoBlock.module.css";
 import Modal from "../Modal/Modal";
+import { useDispatch } from "react-redux";
 
 export default function InfoBlock({ type, id, info, onDelete, onEdit }) {
   const [modal, setModal] = useState(false);
@@ -15,6 +16,7 @@ export default function InfoBlock({ type, id, info, onDelete, onEdit }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [typeModal, setTypeModal] = useState("edit");
+  const dispatch = useDispatch();
 
   const openModalEdit = () => {
     setIsModalOpen(true);
@@ -37,12 +39,12 @@ export default function InfoBlock({ type, id, info, onDelete, onEdit }) {
   };
 
   const handlerDelete = () => {
-    onDelete(id);
+    dispatch(onDelete(id));
     setIsModalOpen(false);
   };
 
   const handlerEdit = () => {
-    onEdit(id, newName);
+    dispatch(onEdit(id, newName));
     setIsModalOpen(false);
   };
 

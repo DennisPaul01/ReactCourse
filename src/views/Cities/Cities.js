@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import Paper from "../../components/Paper/Paper";
 
 import Button from "../../components/Button/Button";
@@ -9,18 +10,20 @@ import InfoBlock from "../../components/InfoBlock/InfoBlock";
 import style from "./Cities.module.css";
 import CitiesForm from "../../components/Forms/CitiesForm/CitiesForm";
 
-import { citiesApi } from "../../api/api";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { useToggle } from "../../hooks/useToggle";
 
 import { useCities } from "../../store/CitiesContext";
 
-export default function Cities() {
-  const { cities, isLoading, error, onAddCity, onDeleteCity, onEditCity } =
-    useCities();
+import { getCities } from "../../redux/selectors";
+import { addCity, deleteCity, editCity } from "../../redux/citiesSlice";
 
-  const { isOpen, open, close, toggle } = useToggle();
+export default function Cities() {
+  const cities = useSelector(getCities);
+  const { isLoading, error } = useCities();
+
+  const { isOpen, close, toggle } = useToggle();
 
   return (
     <div className={style.cities}>
@@ -39,8 +42,8 @@ export default function Cities() {
                     type={"CITY"}
                     id={city.id}
                     info={city.name}
-                    onDelete={onDeleteCity}
-                    onEdit={onEditCity}
+                    onDelete={deleteCity}
+                    onEdit={editCity}
                   />
                 </Paper>
               );
@@ -51,7 +54,7 @@ export default function Cities() {
 
       {isOpen && (
         <Paper>
-          <CitiesForm onAddCity={onAddCity} closeModal={close} />
+          <CitiesForm onAddCity={addCity} closeModal={close} />
         </Paper>
       )}
 
