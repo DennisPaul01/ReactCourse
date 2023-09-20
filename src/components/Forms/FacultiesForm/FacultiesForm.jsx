@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import style from "./FacultiesForm.module.css";
+import { useDispatch } from "react-redux";
+import { addFaculty } from "../../../redux/operations";
 
 export default function FacultiesForm({ onAddFaculty }) {
   const [faculty, setFaculty] = useState("");
+  const dispatch = useDispatch();
 
+  console.log(faculty);
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("submit form");
 
-    onAddFaculty(faculty);
+    // trimitere catre redux store (slice faculties)
+    dispatch(addFaculty(faculty));
   };
 
   return (

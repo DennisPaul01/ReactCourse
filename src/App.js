@@ -9,7 +9,7 @@ import HistoryRoute from "./views/HistoryRoute";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import { useDispatch } from "react-redux";
-import { fetchCities, fetchTutors } from "./redux/operations";
+import { fetchCities, fetchFaculties, fetchTutors } from "./redux/operations";
 
 const LazyFacultyPage = lazy(() =>
   import("./pages/FacultiesPage/FacultiesPage")
@@ -26,7 +26,9 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchTutors());
-    dispatch(fetchCities());
+    // dispatch(fetchCities());
+
+    dispatch(fetchFaculties());
   }, [dispatch]);
 
   return (

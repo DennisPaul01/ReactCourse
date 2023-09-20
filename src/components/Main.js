@@ -15,7 +15,7 @@ export default function Main() {
         <Description />
       </div>
       <Tutors />
-      <Cities />
+      {/* <Cities /> */}
       <Faculties data={collectionData.department} />
     </div>
   );

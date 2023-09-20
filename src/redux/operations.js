@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { tutorApi, citiesApi } from "../api/api";
+import { tutorApi, citiesApi, facultiesApi } from "../api/api";
 
 export const fetchTutors = createAsyncThunk(
   "tutors/fetchTutors",
@@ -72,3 +72,32 @@ export const editCity = createAsyncThunk(
     }
   }
 );
+
+export const fetchFaculties = createAsyncThunk(
+  "faculties/fetchFaculties",
+  async (_, thunkAPI) => {
+    try {
+      const response = await facultiesApi.getAll();
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addFaculty = createAsyncThunk(
+  "faculties/addFaculty",
+  async (faculty, thunkAPI) => {
+    try {
+      const response = await facultiesApi.create({ name: faculty });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// fetchContacts - obținerea unei matrice de contacte (metoda GET). Action type "contacts/fetchAll".
+// addContact - adăugarea unui contact (metoda POST). Action type "contacts/addContact".
+// deleteContact - ștergerea unui contact (metoda DELETE). Action type "contacts/deleteContact".

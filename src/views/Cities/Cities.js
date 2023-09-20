@@ -18,12 +18,16 @@ import {
   getCities,
   getCitiesError,
   getCitiesIsLoading,
+  getTutors,
 } from "../../redux/selectors";
 
 import { addCity, deleteCity, editCity } from "../../redux/operations";
 
 export default function Cities() {
   const cities = useSelector(getCities);
+  const tutors = useSelector(getTutors);
+
+  console.log(cities.length + tutors.length);
   console.log(cities);
   const isLoading = useSelector(getCitiesIsLoading);
   const error = useSelector(getCitiesError);

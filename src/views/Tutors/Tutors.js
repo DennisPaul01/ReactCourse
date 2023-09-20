@@ -19,19 +19,25 @@ import {
   getTutors,
   getTutorsError,
   getTutorsIsLoading,
+  selectCountStatesInRedux,
 } from "../../redux/selectors";
 
 export default function Tutors() {
   const tutors = useSelector(getTutors);
+  const counterStatesinRedux = useSelector(selectCountStatesInRedux);
+
   const isLoading = useSelector(getTutorsIsLoading);
+
   const error = useSelector(getTutorsError);
 
   const { isOpen, close, toggle } = useToggle();
 
+  console.log(counterStatesinRedux);
+
   return (
     <div className={style.tutors}>
       <h1>Tutors</h1>
-
+      {JSON.stringify(counterStatesinRedux)}
       {isLoading ? (
         <LoadingSpinner />
       ) : error ? (

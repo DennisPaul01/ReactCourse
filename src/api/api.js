@@ -18,5 +18,10 @@ const resourceApi = (resource) => {
 
 const tutorApi = resourceApi("tutors");
 const citiesApi = resourceApi("cities");
+const facultiesApi = resourceApi("faculties");
+const phoneApi = resourceApi("contacts");
+// const getAllFaculties = () => api.get("/faculties");
+// const getFaculty = (id) => api.get(`/faculties/${id}`);
+// const addFaculty = (faculty)=>api.post("/faculties",faculty)
 
-export { tutorApi, citiesApi };
+export { tutorApi, citiesApi, facultiesApi };

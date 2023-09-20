@@ -13,46 +13,33 @@ import FacultiesForm from "../../components/Forms/FacultiesForm/FacultiesForm";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { useToggle } from "../../hooks/useToggle";
-
-import { useCities } from "../../store/CitiesContext";
+import { useSelector } from "react-redux";
+import {
+  selectFaculties,
+  selectFacultiesError,
+  selectFacultiesIsLoading,
+} from "../../redux/selectors";
 
 export default function Faculties() {
-  const { cities } = useCities();
-  const [faculties, setFaculties] = useState();
+  const faculties = useSelector(selectFaculties);
+  const error = useSelector(selectFacultiesError);
+  const isLoading = useSelector(selectFacultiesIsLoading);
 
   const { isOpen, close, toggle } = useToggle();
 
   const onAddFaculty = (faculty) => {
     const randomId = Math.floor(Math.random() * 1000 + 1);
-    setFaculties((prev) => [...prev, { id: randomId, name: faculty }]);
+
     close();
   };
 
   const onEditFaculty = (id, newFaculty) => {
     //  prev === faculties
-    setFaculties((prev) =>
-      prev.map((faculty) => {
-        return faculty.id === id
-          ? { id, name: newFaculty }
-          : { id: faculty.id, name: faculty.name };
-      })
-    );
   };
 
-  const onDeleteFaculty = (id) => {
-    setFaculties((prev) => prev.filter((faculty) => faculty.id !== id));
-  };
+  const onDeleteFaculty = (id) => {};
 
-  useEffect(() => {
-    const localStorageData = JSON.parse(localStorage.getItem("faculties"));
-    if (localStorageData) setFaculties(localStorageData);
-  }, []);
-
-  useEffect(() => {
-    if (faculties) localStorage.setItem("faculties", JSON.stringify(faculties));
-  }, [faculties]);
-
-  if (!faculties) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
 
