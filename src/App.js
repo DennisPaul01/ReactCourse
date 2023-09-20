@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 
 import Sidebar from "./components/Sidebar/Sidebar";
 
@@ -8,6 +8,8 @@ import DescriptionRoute from "./views/DescriptionRoute";
 import HistoryRoute from "./views/HistoryRoute";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
+import { useDispatch } from "react-redux";
+import { fetchCities, fetchTutors } from "./redux/operations";
 
 const LazyFacultyPage = lazy(() =>
   import("./pages/FacultiesPage/FacultiesPage")
@@ -20,6 +22,13 @@ const LazyFacultyContent = lazy(() =>
 );
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTutors());
+    dispatch(fetchCities());
+  }, [dispatch]);
+
   return (
     <div className="layout">
       <Sidebar />

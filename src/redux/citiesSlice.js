@@ -1,60 +1,54 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { fetchCities, addCity, deleteCity, editCity } from "./operations";
 
-const citiesInitalState = [
-  { id: 1, name: "Kyiv" },
-  { id: 2, name: "London" },
-  { id: 3, name: "Timisoara" },
-];
+const handlePending = (state) => {
+  state.isLoading = true;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const citiesSlice = createSlice({
   name: "cities",
-  initialState: citiesInitalState,
-  reducers: {
-    addCity: {
-      reducer(state, action) {
-        // action.payload = prepare (payload)
-        return [...state, action.payload];
-      },
-      prepare(city) {
-        return {
-          payload: {
-            id: nanoid(),
-            city,
-          },
-        };
-      },
+  initialState: { items: [], isLoading: false, error: null },
+  extraReducers: {
+    [fetchCities.pending]: handlePending,
+    [fetchCities.fulfilled](state, action) {
+      console.log(state.items);
+      state.items = action.payload;
+      state.isLoading = false;
+      state.error = null;
     },
-    deleteCity: {
-      reducer(state, action) {
-        return state.filter((city) => city.id !== action.payload.id);
-      },
-      prepare(id) {
-        return {
-          payload: {
-            id,
-          },
-        };
-      },
+    [fetchCities.rejected]: handleRejected,
+    [addCity.pending]: handlePending,
+    [addCity.fulfilled](state, action) {
+      state.items.push(action.payload);
+      state.isLoading = false;
+      state.error = null;
     },
-    editCity: {
-      reducer(state, action) {
-        return state.map((city) =>
-          city.id === action.payload.id
-            ? { id: city.id, name: action.payload.newCity }
-            : city
-        );
-      },
-      prepare(id, newCity) {
-        return {
-          payload: {
-            id,
-            newCity,
-          },
-        };
-      },
+    [addCity.rejected]: handleRejected,
+    [deleteCity.rejected]: handlePending,
+    [deleteCity.fulfilled](state, action) {
+      const index = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.items.splice(index, 1);
+      state.isLoading = false;
+      state.error = null;
     },
+    [deleteCity.rejected]: handleRejected,
+    [editCity.pending]: handlePending,
+    [editCity.fulfilled](state, action) {
+      state.items.map((city) =>
+        city.id === action.payload.id ? (city.name = action.payload.name) : city
+      );
+      state.isLoading = false;
+      state.error = null;
+    },
+    [editCity.rejected]: handleRejected,
   },
 });
 
-export const { addCity, deleteCity, editCity } = citiesSlice.actions;
 export const citiesReducer = citiesSlice.reducer;

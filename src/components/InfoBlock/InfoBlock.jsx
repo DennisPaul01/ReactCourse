@@ -44,7 +44,7 @@ export default function InfoBlock({ type, id, info, onDelete, onEdit }) {
   };
 
   const handlerEdit = () => {
-    dispatch(onEdit(id, newName));
+    dispatch(onEdit({ id, newName }));
     setIsModalOpen(false);
   };
 

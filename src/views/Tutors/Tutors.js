@@ -12,14 +12,19 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { useToggle } from "../../hooks/useToggle";
 
-import { useTutors } from "../../store/TutorsContext";
 import { useSelector } from "react-redux";
-import { getTutors } from "../../redux/selectors";
-import { addTutor } from "../../redux/tutorsSlice";
+import { addTutor } from "../../redux/operations";
+
+import {
+  getTutors,
+  getTutorsError,
+  getTutorsIsLoading,
+} from "../../redux/selectors";
 
 export default function Tutors() {
   const tutors = useSelector(getTutors);
-  const { isLoading, error } = useTutors();
+  const isLoading = useSelector(getTutorsIsLoading);
+  const error = useSelector(getTutorsError);
 
   const { isOpen, close, toggle } = useToggle();
 

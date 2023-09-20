@@ -14,14 +14,19 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { useToggle } from "../../hooks/useToggle";
 
-import { useCities } from "../../store/CitiesContext";
+import {
+  getCities,
+  getCitiesError,
+  getCitiesIsLoading,
+} from "../../redux/selectors";
 
-import { getCities } from "../../redux/selectors";
-import { addCity, deleteCity, editCity } from "../../redux/citiesSlice";
+import { addCity, deleteCity, editCity } from "../../redux/operations";
 
 export default function Cities() {
   const cities = useSelector(getCities);
-  const { isLoading, error } = useCities();
+  console.log(cities);
+  const isLoading = useSelector(getCitiesIsLoading);
+  const error = useSelector(getCitiesError);
 
   const { isOpen, close, toggle } = useToggle();
 
