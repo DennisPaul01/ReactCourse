@@ -4,8 +4,6 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
 }
 
 .sidebar__block {
@@ -13,9 +11,6 @@
   background-color: #161d2a;
 }
 
-.tabs {
-  margin-bottom: auto;
-}
 .tabs__tab,
 .username {
   display: flex;

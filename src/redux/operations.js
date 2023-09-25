@@ -1,6 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { tutorApi, citiesApi, facultiesApi } from "../api/api";
 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../firebase";
+
 export const fetchTutors = createAsyncThunk(
   "tutors/fetchTutors",
   async (_, thunkAPI) => {
@@ -98,6 +104,33 @@ export const addFaculty = createAsyncThunk(
   }
 );
 
-// fetchContacts - obținerea unei matrice de contacte (metoda GET). Action type "contacts/fetchAll".
-// addContact - adăugarea unui contact (metoda POST). Action type "contacts/addContact".
-// deleteContact - ștergerea unui contact (metoda DELETE). Action type "contacts/deleteContact".
+export const register = createAsyncThunk(
+  "user/register",
+  async (user, thunkAPI) => {
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
+      console.log(response.user);
+      return response.user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
+  try {
+    const response = await signInWithEmailAndPassword(
+      auth,
+      user.email,
+      user.password
+    );
+    console.log(response.user);
+    return response.user;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

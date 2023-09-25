@@ -10,6 +10,8 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import { useDispatch } from "react-redux";
 import { fetchCities, fetchFaculties, fetchTutors } from "./redux/operations";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 const LazyFacultyPage = lazy(() =>
   import("./pages/FacultiesPage/FacultiesPage")
@@ -36,7 +38,8 @@ function App() {
       <Sidebar />
       <Suspense fallback={<LoadingPage />}>
         <Routes>
-          <Route path="/" element={<LazyMainPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/universities" element={<LazyMainPage />} />
           <Route path="/faculties" element={<LazyFacultyPage />} />
 

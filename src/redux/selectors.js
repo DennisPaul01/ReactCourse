@@ -12,11 +12,13 @@ export const selectFaculties = (state) => state.faculties.items;
 export const selectFacultiesIsLoading = (state) => state.faculties.isLoading;
 export const selectFacultiesError = (state) => state.faculties.error;
 
+export const selectIsAuthenticated = (state) => state.user.isAuthenticated;
+
 export const selectCountStatesInRedux = createSelector(
   [getTutors, selectFaculties],
   (tutors, universitate) => {
     console.log(tutors);
     console.log(universitate);
-    return [...tutors, ...universitate];
+    return 1;
   }
 );
