@@ -1,11 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { tutorApi, citiesApi, facultiesApi } from "../api/api";
+import { db } from "../firebase";
+import { auth } from "../firebase";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
-import { auth } from "../firebase";
+
+import {
+  collection,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
+  doc,
+} from "firebase/firestore";
 
 export const fetchTutors = createAsyncThunk(
   "tutors/fetchTutors",
@@ -83,9 +95,21 @@ export const fetchFaculties = createAsyncThunk(
   "faculties/fetchFaculties",
   async (_, thunkAPI) => {
     try {
-      const response = await facultiesApi.getAll();
-      console.log(response);
-      return response.data;
+      // Identificare user
+      const currState = thunkAPI.getState();
+      const userId = currState.user.user.uid;
+
+      const userDocRef = doc(db, "users", userId);
+      const facultiesCollectionRef = collection(userDocRef, "faculties");
+      const documentsFaculties = await getDocs(facultiesCollectionRef);
+
+      const facultiesData = [];
+      documentsFaculties.forEach((doc) => {
+        const facultyData = doc.data();
+        facultiesData.push({ ...facultyData, id: doc.id });
+      });
+
+      return facultiesData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -96,11 +120,46 @@ export const addFaculty = createAsyncThunk(
   "faculties/addFaculty",
   async (faculty, thunkAPI) => {
     try {
-      const response = await facultiesApi.create({ name: faculty });
-      return response.data;
+      // Identificare user
+      const currState = thunkAPI.getState();
+      const userId = currState.user.user.uid;
+
+      const userDocRef = doc(db, "users", userId);
+      const facultiesCollectionRef = collection(userDocRef, "faculties");
+      const docRef = await addDoc(facultiesCollectionRef, { name: faculty });
+      const addedData = (await getDoc(docRef)).data();
+      console.log(addedData);
+      // const exempluDoc = {
+      //   users: {
+      //     userid1: { faculties: [{ id: "unicId", name: "Uvt" }] },
+      //     userid2: { faculties: [{ id: "unicId", name: "Uvt" }] },
+      //   },
+      // };
+
+      // const response = await facultiesApi.create({ name: faculty });
+      return { id: docRef.id, ...addedData };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  }
+);
+
+export const deleteFaculty = createAsyncThunk(
+  "faculties/deleteFaculty",
+
+  async (facultyId, thunkAPI) => {
+    console.log(facultyId);
+    // Identificare user
+    const currState = thunkAPI.getState();
+    const userId = currState.user.user.uid;
+
+    const userDocRef = doc(db, "users", userId);
+    const facultiesCollectionRef = collection(userDocRef, "faculties");
+    const facultyDocRef = doc(facultiesCollectionRef, facultyId);
+
+    await deleteDoc(facultyDocRef);
+
+    return facultyId;
   }
 );
 
@@ -113,7 +172,7 @@ export const register = createAsyncThunk(
         user.email,
         user.password
       );
-      console.log(response.user);
+
       return response.user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -128,8 +187,16 @@ export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
       user.email,
       user.password
     );
-    console.log(response.user);
+
     return response.user;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
+  try {
+    await signOut(auth);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }

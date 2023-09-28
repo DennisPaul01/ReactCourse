@@ -2,7 +2,7 @@
 // - aici sunt executate functiile care modifica state
 
 import { createSlice } from "@reduxjs/toolkit";
-import { addFaculty, fetchFaculties } from "./operations";
+import { addFaculty, deleteFaculty, fetchFaculties } from "./operations";
 
 // construim o magazie de data ce poate fi acesata de orice componenta din aplicatia noastra
 const facultiesSlice = createSlice({
@@ -39,6 +39,13 @@ const facultiesSlice = createSlice({
     [addFaculty.rejected](state, payload) {
       state.isLoading = false;
       state.error = payload.action;
+    },
+    [deleteFaculty.fulfilled](state, action) {
+      state.items = state.items.filter(
+        (faculty) => faculty.id !== action.payload
+      );
+      state.isLoading = false;
+      state.error = null;
     },
   },
 });

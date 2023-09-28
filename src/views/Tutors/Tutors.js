@@ -32,8 +32,6 @@ export default function Tutors() {
 
   const { isOpen, close, toggle } = useToggle();
 
-  console.log(counterStatesinRedux);
-
   return (
     <div className={style.tutors}>
       <h1>Tutors</h1>

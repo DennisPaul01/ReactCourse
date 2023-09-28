@@ -20,6 +20,8 @@ import {
   selectFacultiesIsLoading,
 } from "../../redux/selectors";
 
+import { deleteFaculty } from "../../redux/operations";
+
 export default function Faculties() {
   const faculties = useSelector(selectFaculties);
   const error = useSelector(selectFacultiesError);
@@ -37,8 +39,6 @@ export default function Faculties() {
     //  prev === faculties
   };
 
-  const onDeleteFaculty = (id) => {};
-
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -54,7 +54,7 @@ export default function Faculties() {
                 id={faculty.id}
                 type={"FACULTY"}
                 info={faculty.name}
-                onDelete={onDeleteFaculty}
+                onDelete={deleteFaculty}
                 onEdit={onEditFaculty}
               />
             </Paper>

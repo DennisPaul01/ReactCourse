@@ -27,8 +27,6 @@ export default function Cities() {
   const cities = useSelector(getCities);
   const tutors = useSelector(getTutors);
 
-  console.log(cities.length + tutors.length);
-  console.log(cities);
   const isLoading = useSelector(getCitiesIsLoading);
   const error = useSelector(getCitiesError);
 

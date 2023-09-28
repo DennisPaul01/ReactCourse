@@ -16,7 +16,6 @@ const citiesSlice = createSlice({
   extraReducers: {
     [fetchCities.pending]: handlePending,
     [fetchCities.fulfilled](state, action) {
-      console.log(state.items);
       state.items = action.payload;
       state.isLoading = false;
       state.error = null;

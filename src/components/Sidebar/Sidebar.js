@@ -3,22 +3,31 @@ import Menu from "../Menu";
 import { BiSolidUserCircle } from "react-icons/bi";
 import "./Sidebar.css";
 import { Button, Box } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../redux/selectors";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/operations";
 
 function Sidebar() {
   const isAuth = useSelector(selectIsAuthenticated);
-  console.log(isAuth);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <div className="sidebar">
       {isAuth ? (
         <>
           <div className="sidebar__block" />
           <Menu />
-          <Button variant="contained">Logout</Button>
+          <Button variant="contained" onClick={handleLogout}>
+            Logout
+          </Button>
         </>
       ) : (
         <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>

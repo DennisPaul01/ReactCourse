@@ -7,10 +7,8 @@ export default function FacultiesForm({ onAddFaculty }) {
   const [faculty, setFaculty] = useState("");
   const dispatch = useDispatch();
 
-  console.log(faculty);
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submit form");
 
     // trimitere catre redux store (slice faculties)
     dispatch(addFaculty(faculty));

@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { fetchCities, fetchFaculties, fetchTutors } from "./redux/operations";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import PrivateRoutes from "./routes/PrivateRoutes";
 
 const LazyFacultyPage = lazy(() =>
   import("./pages/FacultiesPage/FacultiesPage")
@@ -24,15 +25,6 @@ const LazyFacultyContent = lazy(() =>
 );
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchTutors());
-    // dispatch(fetchCities());
-
-    dispatch(fetchFaculties());
-  }, [dispatch]);
-
   return (
     <div className="layout">
       <Sidebar />
@@ -40,14 +32,19 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/universities" element={<LazyMainPage />} />
-          <Route path="/faculties" element={<LazyFacultyPage />} />
-
-          <Route path="/faculties/:facultyId" element={<LazyFacultyContent />}>
-            <Route path="description" element={<DescriptionRoute />} />
-            <Route path="history" element={<HistoryRoute />} />
+          // rute private
+          <Route element={<PrivateRoutes />}>
+            <Route path="/universities" element={<LazyMainPage />} />
+            <Route path="/faculties" element={<LazyFacultyPage />} />
+            <Route
+              path="/faculties/:facultyId"
+              element={<LazyFacultyContent />}
+            >
+              <Route path="description" element={<DescriptionRoute />} />
+              <Route path="history" element={<HistoryRoute />} />
+            </Route>
           </Route>
-
+          // rute private
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

@@ -17,8 +17,6 @@ export const selectIsAuthenticated = (state) => state.user.isAuthenticated;
 export const selectCountStatesInRedux = createSelector(
   [getTutors, selectFaculties],
   (tutors, universitate) => {
-    console.log(tutors);
-    console.log(universitate);
     return 1;
   }
 );

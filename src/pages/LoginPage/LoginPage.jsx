@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Typography, Box, TextField } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/operations";
 import { useNavigate } from "react-router-dom";
+import { selectIsAuthenticated } from "../../redux/selectors";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,8 @@ export default function LoginPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isAuth = useSelector(selectIsAuthenticated);
 
   const handleChangeInput = (event) => {
     const { name, value } = event.target;
@@ -22,11 +25,13 @@ export default function LoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
 
     dispatch(login({ email: email, password: password }));
-    navigate("/universities");
   };
+
+  useEffect(() => {
+    if (isAuth) navigate("/universities");
+  }, [isAuth, navigate]);
 
   return (
     <Box
